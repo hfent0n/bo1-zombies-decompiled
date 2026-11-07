@@ -481,6 +481,12 @@ void G_Mapkit_f_catalog();
 void G_Mapkit_f_light();
 void G_Mapkit_f_lightuses();
 
+// mod: Save & Quit builtins (g_sp_savequit.cpp)
+void G_SaveQuit_f_write();
+void G_SaveQuit_f_read();
+void G_SaveQuit_f_retire();
+void G_SaveQuit_f_exit();
+
 const BuiltinFunctionDef g_sp_ai_functions[] =
 {
     { "bo1_mapkit_editcount", G_Mapkit_f_editcount, 0 }, // mod (L46): mapkit layout access
@@ -494,6 +500,10 @@ const BuiltinFunctionDef g_sp_ai_functions[] =
     { "bo1_mapkit_catalog", G_Mapkit_f_catalog, 0 },
     { "bo1_mapkit_light", G_Mapkit_f_light, 0 }, // mapkit-fix-3 mood lighting
     { "bo1_mapkit_lightuses", G_Mapkit_f_lightuses, 0 },
+    { "bo1_savequit_write", G_SaveQuit_f_write, 0 }, // mod: Save & Quit (mods/savequit)
+    { "bo1_savequit_read", G_SaveQuit_f_read, 0 },
+    { "bo1_savequit_retire", G_SaveQuit_f_retire, 0 },
+    { "bo1_savequit_exit", G_SaveQuit_f_exit, 0 },
     { "bo1_mod_getenemycount", G_f_mod_getenemycount, 0 }, // mod (L43): only called by bo1_mod_scriptperf rewrites
     { "getaispeciesarray", G_f_getaispeciesarray, 0 },
     { "getaiarray", G_f_getaiarray, 0 },

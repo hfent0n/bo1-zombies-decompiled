@@ -36,6 +36,10 @@ void SP_ClearLoadGame();
 // TEMPORARY (not SP): true once after SP_TemporaryReloadMap queued its fast_restart.
 bool SP_TakeTemporaryFastRestart();
 void SP_RegisterLoadGameCommands();
+// mod: Save & Quit (g_sp_savequit.cpp, script mod mods/savequit). The key bo1_mod_savequit_key; true = a request
+// was raised and the key's binding is not run.
+bool SP_SaveQuitKey(int key);
+void SP_SaveQuit_Register();
 // SP 0x00479C00, run by SV_Frame (SP 0x00618D7A) while the server runs: a staged save is loaded.
 // Nonzero skips the server frame.
 int SP_LoadGame_RunLoader();

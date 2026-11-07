@@ -425,6 +425,7 @@ void SP_RegisterLoadGameCommands()
     Cmd_AddCommandInternal("loadgame_continue", SP_LoadGameContinue_f, &SP_LoadGameContinue_f_VAR);
     SP_QuickRestartDvar(); // mod
     Cmd_AddCommandInternal("bo1_quickrestart", SP_QuickRestart_f, &SP_QuickRestart_f_VAR); // mod
+    SP_SaveQuit_Register(); // mod: Save & Quit (g_sp_savequit.cpp)
     if (!bo1_zombies->current.enabled)
         return;
     // zombies: SP SV init dvars (SP 0x00698450..0x006984cb).

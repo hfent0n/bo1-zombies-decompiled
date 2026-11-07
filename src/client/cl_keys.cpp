@@ -1844,6 +1844,7 @@ void __cdecl CL_InitKeyCommands()
 
 // mod: bo1_mod_quickrestart. A key bound to +reload pressed after game over goes to SP_QuickRestart (the same
 // function as the console command bo1_quickrestart); true = restarted, the key's binding is not run.
+// Also the Save & Quit key (bo1_mod_savequit_key, SP_SaveQuitKey).
 static bool CL_ModQuickRestartKey(int localClientNum, int key)
 {
     const char *binding = playerKeys[localClientNum].keys[key].binding;
@@ -1851,6 +1852,9 @@ static bool CL_ModQuickRestartKey(int localClientNum, int key)
 
     if ( !zombiemode || !zombiemode->current.enabled )
         return false;
+    // mod: bo1_mod_savequit - the Save & Quit key (g_sp_savequit.cpp, mods/savequit)
+    if ( SP_SaveQuitKey(key) )
+        return true;
     if ( !(binding && !I_stricmp(binding, "+reload")) && !(binding2 && !I_stricmp(binding2, "+reload")) )
         return false;
     return SP_QuickRestart(false);

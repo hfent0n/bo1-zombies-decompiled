@@ -89,8 +89,16 @@ function refresh() {
   var canNightmare = (m[0] == "zombie_pentagon" || m[0] == "zombie_theater") && !m[3];
   el("difficulty").disabled = !canNightmare;
   el("diffnote").innerHTML = canNightmare ? (m[0] == "zombie_theater" ? "Nightmare: George, an astronaut, napalm and shrieker zombies, hellhound packs, Five's thief and Ascension's space monkeys raiding the perk machines, all from round 1 on Kino." : "Nightmare: George, an astronaut, napalm and shrieker zombies on top of Five's thief and dogs.") + " Hell: several of each at once. Loads three extra maps' assets (slower start)." : "Five and Kino only.";
+  // Save & Quit (mods/savequit): "Continue" only when this map has a save (build\Release\savequit\<name>.txt)
+  var hasSave = new ActiveXObject("Scripting.FileSystemObject").FileExists(P + "\\savequit\\" + saveName(m) + ".txt");
+  el("cont").disabled = !el("savequit").checked || !hasSave;
+  if (el("cont").disabled) el("cont").checked = false;
+  el("savenote").innerHTML = !el("savequit").checked ? "" : hasSave ? "A saved game exists for this map." : "No saved game for this map yet.";
   el("cmd").innerText = args();
 }
+
+// the save file name: maps\savequit\_savequit.gsc savequit_name() (map, plus the mapkit layout)
+function saveName(m) { return m[0] + (m[3] ? "_" + m[3] : ""); }
 
 function args() {
   var m = MAPS[el("map").value];
@@ -120,6 +128,13 @@ function args() {
   }
   if (!el("difficulty").disabled) a = nightmareFlags(el("difficulty").value, a, m[0]); // Normal = 0: unchanged
   if (el("quickrestart").checked) a += " +set bo1_mod_quickrestart 1"; // R after game over: SP_QuickRestart
+  if (el("savequit").checked) {
+    // mods/savequit goes last in fs_mods (its round wins over horde_start_round); engine half: bo1_mod_savequit
+    if (/\+set fs_mods /.test(a)) a = a.replace(/(\+set fs_mods [^+]*?)(\s+\+|\s*$)/, "$1 savequit$2");
+    else a += m[3] ? " +set fs_mods mapkit savequit" : " +set fs_mods savequit";
+    a += " +set bo1_mod_savequit 1";
+    if (el("cont").checked) a += " +set savequit_load 1";
+  }
   return a + " +devmap " + m[0];
 }
 
@@ -164,6 +179,11 @@ function play() {
   <label><input type="checkbox" id="zinfo" onclick="refresh()"> Tab: zombie counter</label>
   <label><input type="checkbox" id="noperks" onclick="refresh()"> No perk machines <span class="note">with or without horde; Pack-a-Punch and the box stay</span></label>
   <label><input type="checkbox" id="quickrestart" checked onclick="refresh()"> R restarts after game over <span class="note">same map, same settings</span></label>
+</fieldset>
+<fieldset><legend>Save &amp; Quit</legend>
+  <label><input type="checkbox" id="savequit" checked onclick="refresh()"> Save &amp; Quit with F5 <span class="note">press twice in game; resumes at the start of the saved round</span></label>
+  <label><input type="checkbox" id="cont" onclick="refresh()"> Continue saved game <span class="note">use the same options as when you saved</span></label>
+  <div class="note" id="savenote"></div>
 </fieldset>
 <button onclick="play()">Play</button>
 <div id="cmd"></div>

@@ -952,6 +952,7 @@ set(SRC_GAME_SP
 	"${SRC_DIR}/game_sp/g_sp_savegame.h"
 	"${SRC_DIR}/game_sp/g_sp_loadgame.cpp"
 	"${SRC_DIR}/game_sp/g_sp_loadgame.h"
+	"${SRC_DIR}/game_sp/g_sp_savequit.cpp"
 	"${SRC_DIR}/game_sp/scr_sp_tables.cpp"
 	"${SRC_DIR}/game_sp/scr_sp_tables.h"
 )
