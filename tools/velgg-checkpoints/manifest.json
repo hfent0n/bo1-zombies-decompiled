@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "vel.gg Checkpoints",
+  "version": "0.1.0",
+  "description": "Round checkpoints for the browser BO1 zombies on vel.gg: autosaves each round, F8 to save, load from the popup.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://vel.gg/*"],
+  "action": { "default_popup": "popup.html", "default_title": "vel.gg Checkpoints" },
+  "background": { "service_worker": "src/background.js" },
+  "web_accessible_resources": [
+    { "resources": ["mod/halo/mod.ff", "mod/halo/halo.iwd"], "matches": ["https://vel.gg/*"] }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://vel.gg/*"],
+      "js": ["src/page.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://vel.gg/*"],
+      "js": ["src/mod-files.js", "src/mods.js", "src/content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

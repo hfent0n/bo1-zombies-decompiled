@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>vel.gg Checkpoints</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>vel.gg mods</h1>
+    <label class="switch"><input type="checkbox" id="enabled"> On</label>
+  </header>
+  <p id="status" class="muted"></p>
+  <label class="renderer">Renderer
+    <select id="renderer">
+      <option value="auto">vel.gg's choice (usually WebGPU)</option>
+      <option value="webgl2">WebGL2</option>
+    </select>
+  </label>
+  <section>
+    <h2>Mods</h2>
+    <div id="mods"></div>
+    <p class="muted note">Changes apply the next time a map starts. In co-op only the host's mods, settings and
+      checkpoints count; friends don't need the extension. Off with Counter-Strike guns.</p>
+  </section>
+  <section>
+    <h2 class="split">Checkpoints <button id="save-now" type="button">Save now (F8)</button></h2>
+    <main id="list"></main>
+    <p class="muted note">Loading starts the map again at the beginning of the saved round. Zombies, power-ups, the
+      box and quests are not saved.</p>
+  </section>
+  <details id="log">
+    <summary>Engine log (mod lines, this page load)</summary>
+    <pre id="mod-status">Mod status: none yet.</pre>
+    <pre id="log-lines">Nothing yet: start a map on vel.gg.</pre>
+    <button id="copy-log" type="button">Copy</button>
+  </details>
+  <script src="src/mods.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
